@@ -1,0 +1,13 @@
+public class ArbolBinario<T> {
+    protected private class Nodo<E> {
+	private E elemento;
+	private Nodo<E> padre;
+	private Nodo<E> izquierdo;
+	private Nodo<E> derecho;
+
+	public Nodo<E>(E elemento) {
+	    
+	}
+    }
+    
+}

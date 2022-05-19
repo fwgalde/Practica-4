@@ -1,0 +1,16 @@
+public class ArbolBinario<T> {
+    private Nodo<T> raiz;
+    
+    protected class Nodo<E> {
+	E datos;
+	Nodo<E> padre;
+	Nodo<E> izquierdo;
+	Nodo<E> derecho;
+
+	Nodo(E datos){
+	    this.datos = datos;
+	    this.izquierdo = null;
+	    this.derecho = null;
+	}
+    }
+}
