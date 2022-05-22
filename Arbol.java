@@ -2,12 +2,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 class NodoArbol {
-    
 
-    NodoArbol nodoIzq;
-    int datos;
-    NodoArbol nodoDer;
-
+    private NodoArbol nodoIzq;
+    private int datos;
+    private NodoArbol nodoDer;
 
     public NodoArbol(int datosNodo) {
         datos = datosNodo;
@@ -31,17 +29,29 @@ class NodoArbol {
         }
     }
 
+    public NodoArbol getNodoIzq() {
+	return nodoIzq;
+    }
+
+    public NodoArbol getNodoDer() {
+	return nodoDer;
+    }
+
+    public int getDato() {
+	return datos;
+    }
 }
 
 public class Arbol {
 
+    private NodoArbol raiz;
 
-    NodoArbol raiz;
-
+    /**
+     *	Método constructor de árbol.
+     */
     public Arbol() {
         raiz = null;
     }
-
 
     public void insertarNodo(int valorInsertar) {
 
@@ -50,50 +60,49 @@ public class Arbol {
         } else {
             raiz.insertar(valorInsertar);
         }
-
-
     }
 
     public void preorden() {
         recorrePreorden(raiz);
     }
 
-
     public void recorrePreorden(NodoArbol nodo) {
         if (nodo==null) {
             return;
         }
-        System.out.print(nodo.datos + " ");
-        recorrePreorden(nodo.nodoIzq);
-        recorrePreorden(nodo.nodoDer);
+        System.out.print(nodo.getDato() + " ");
+        recorrePreorden(nodo.getNodoIzq());
+        recorrePreorden(nodo.getNodoDer());
     }
 
-
+    /**
+     * Método que implementa el recorrido inorden.
+     */
     public void Inorden(){
         recorreInorden(raiz);
     }
 
 
-    public void recorreInorden(NodoArbol nodo) { 
+    public void recorreInorden(NodoArbol nodo) {
         if (nodo==null) {
             return;
         }
-        recorreInorden(nodo.nodoIzq);
-        System.out.print(nodo.datos + " ");
-        recorreInorden(nodo.nodoDer);
+        recorreInorden(nodo.getNodoIzq());
+        System.out.print(nodo.getDato() + " ");
+        recorreInorden(nodo.getNodoDer());
     }
 
     public void Postorden(){
         recorrePostorden(raiz);
     }
 
-    public void recorrePostorden(NodoArbol nodo) { 
+    public void recorrePostorden(NodoArbol nodo) {
         if (nodo==null) {
             return;
         }
-        recorrePostorden(nodo.nodoIzq);
-        recorrePostorden(nodo.nodoDer);
-        System.out.print(nodo.datos + " ");
+        recorrePostorden(nodo.getNodoIzq());
+        recorrePostorden(nodo.getNodoDer());
+        System.out.print(nodo.getDato() + " ");
     }
 
 
@@ -103,171 +112,259 @@ public class Arbol {
     	Queue<NodoArbol> cola = new LinkedList<>();
     	cola.add(raiz);
     	cola.add(null);
-    	
+
     	while(!cola.isEmpty()) {
-    		NodoArbol actual = cola.remove();
-    		
-    		if(actual == null) {
-    			System.out.println();
-    			if(cola.isEmpty()) {
-    				break;
-    			} else {
-    				cola.add(null);
-    			}
-    		} else {
-    			System.out.print(actual.datos + " ");
-    			if(actual.nodoIzq != null) {
-    				cola.add(actual.nodoIzq);
-    			}
-    			if(actual.nodoDer != null) {
-    				cola.add(actual.nodoDer);
-    			}
-    		}		
+	    NodoArbol actual = cola.remove();
+
+	    if(actual == null) {
+		System.out.println();
+		if(cola.isEmpty()) {
+		    break;
+		} else {
+		    cola.add(null);
+		}
+	    } else {
+		System.out.print(actual.getDato() + " ");
+		if(actual.getNodoIzq() != null) {
+		    cola.add(actual.getNodoIzq());
+		}
+		if(actual.getNodoDer() != null) {
+		    cola.add(actual.getNodoDer());
+		}
+	    }
     	}
     }
-    
-    public boolean contiene(NodoArbol raiz, int dato) {
+
+    /**
+     * Método que devuelve si un valor está contenido en el árbol.
+     * @param dato Valor del nodo que se busca.
+     * @return true si está en el árbol, false en otro caso.
+     */
+    public boolean contiene(int dato){
+	return contiene(raiz, dato);
+    }
+
+    /**
+     * Método auxiliar recursivo que revisa si un valor está contenido en el árbol.
+     * @param dato Dato que se busca del árbol.
+     * @param raiz Raíz del árbol del cual queremos conocer si tiene el dato.
+     * @return True en caso de que lo encuentre False en otro caso.
+     */
+    protected boolean contiene(NodoArbol raiz, int dato) {
     	boolean b = false;
     	if (raiz == null)
     		return b;
-    	if(raiz.datos == dato)
+    	if(raiz.getDato() == dato)
     		b = true;
-    	else if(dato < raiz.datos)
-    		b = contiene(raiz.nodoIzq, dato);
+    	else if(dato < raiz.getDato())
+	    b = contiene(raiz.getNodoIzq(), dato);
     	else
-    		b = contiene(raiz.nodoDer, dato);
-    	return b;    			
+	    b = contiene(raiz.getNodoDer(), dato);
+    	return b;
     }
-    
-    public boolean contieneNodo(NodoArbol raiz, NodoArbol n) {
+
+    protected boolean contieneNodo(NodoArbol raiz, NodoArbol n) {
     	boolean b = false;
     	if(raiz == null)
     		return b;
     	if(raiz == n)
     		b = true;
-    	else if(contieneNodo(raiz.nodoDer, n) || contieneNodo(raiz.nodoIzq,n))
+    	else if(contieneNodo(raiz.getNodoDer(), n) || contieneNodo(raiz.getNodoIzq(),n))
     		b = true;
     	return b;
     }
-    
-    public NodoArbol busca(NodoArbol raiz, int dato) {
-    	if(!contiene(raiz, dato))
-    		return null;
-    	else if(raiz.datos == dato)
-    		return raiz;
-    	else if(dato < raiz.datos)
-    		return busca(raiz.nodoIzq, dato);
-    	else
-    		return busca(raiz.nodoDer, dato);
+
+    /**
+     * Método que devuelve el nodo de un valor dado.
+     * @param dato Valor del nodo a buscar.
+     * @return Primer nodo que contenga el valor buscado.
+     */
+    public NodoArbol busca(int dato){
+	return busca(raiz, dato);
     }
-    
-//    public void busquedaSeguimiento(NodoArbol n) {
-//    	if(!contiene(raiz, n)) {
-//    		
-//    	}
-//    }
-    
+
+    /**
+     * Método auxiliar recursivo que devuelve el nodo de un valor dado.
+     * @param raiz Raíz del árbol binario.
+     * @param dato Valor del nodo a buscar.
+     * @return Primer nodo que contenga el valor buscado.
+     */
+    protected NodoArbol busca(NodoArbol raiz, int dato) {
+    	if(!contiene(dato))
+    		return null;
+    	else if(raiz.getDato() == dato)
+    		return raiz;
+    	else if(dato < raiz.getDato())
+	    return busca(raiz.getNodoIzq(), dato);
+    	else
+	    return busca(raiz.getNodoDer(), dato);
+    }
+
+    /**
+     * Método que devuelve el camino de la raíz a un nodo en específico.
+     * @param dato Valor del nodo que buscamos.
+     */
+    public void busquedaSeguimiento(int dato) {
+    	if(!contiene(dato)) {
+	    System.out.println("Nodo no encontrado");
+    	} else {
+	    ruta(raiz, dato);
+	    System.out.println();
+	}
+    }
+
+    /**
+     * Método auxiliar de busquedaSeguimiento. Encuentra la ruta para llegar de la raíz al nodo que buscamos.
+     * @param raiz Raíz del árbol binario.
+     * @param dato Valor del nodo que buscamos.
+     */
     public void ruta(NodoArbol raiz, int dato) {
-    	if(!contiene(raiz, dato)) 
-    		System.out.println("Nodo no encontrado.");
-    	else if (raiz.datos == dato)
-    		System.out.println();
-    	else if(dato < raiz.datos) {
+	if(dato < raiz.getDato()) {
     		System.out.print("L");
-    		ruta(raiz.nodoIzq,dato);
+    		ruta(raiz.getNodoIzq(),dato);
     	} else {
     		System.out.print("D");
-    		ruta(raiz.nodoDer, dato);
+    		ruta(raiz.getNodoDer(), dato);
     	}
     }
-    
-    public int getNumeroDescendientes(NodoArbol raiz, int dato) {
-    	if(!contiene(raiz,dato)) {
+
+    /**
+     * Método que devuleve el número de descendientes de un nodo de un árbol.
+     * @param dato El valor del nodo.
+     * @return El número de descendientes del nodo.
+     */
+    public int getNumeroDescendientes(int dato) {
+    	if(!contiene(dato)) {
     		return -1;
     	}
-    	NodoArbol padre = busca(raiz, dato);
+    	NodoArbol padre = busca(dato);
     	int descendientes = cuentaHijos(padre);
     	return descendientes;
     }
-    
-    public int cuentaHijos(NodoArbol raiz) {
-    	if(raiz == null)
+
+    /**
+     * Método auxiliar de getNumeroDescendientes.
+     * Cuenta el número de descendientes de un nodo n recursivamente.
+     * @param n El nodo padre.
+     * @return El número de descendientes del nodo n.
+     */
+    public int cuentaHijos(NodoArbol n) {
+    	if(n == null)
     		return 0;
     	int hijos = 0;
-    	if(raiz.nodoIzq != null)
-    		hijos++;    	
-    	if(raiz.nodoDer != null) 
-    		hijos++;    	
-    	return hijos + cuentaHijos(raiz.nodoDer) + cuentaHijos(raiz.nodoIzq);
+    	if(n.getNodoIzq() != null)
+    		hijos++;
+    	if(n.getNodoDer() != null)
+    		hijos++;
+    	return hijos + cuentaHijos(n.getNodoDer()) + cuentaHijos(n.getNodoIzq());
     }
-    
+
+    /**
+     * Método que revisa si es un árbol binario balanceado.
+     * @param raiz Raíz del árbol binario.
+     * @return true si es un BalancedBinaryTree, false en otro caso.
+     */
     public boolean isBalancedBinaryTree(NodoArbol raiz) {
     	boolean b = false;
-    	int diferencia = altura(raiz.nodoIzq) - altura(raiz.nodoDer);
+    	int diferencia = altura(raiz.getNodoIzq()) - altura(raiz.getNodoDer());
     	if(diferencia == 0 || Math.abs(diferencia) == 1)
     		b = true;
     	return b;
     }
-    
+
+    /**
+     * Método que revisa si es un árbol binario perfecto.
+     * @param raiz Raíz del árbol binario.
+     * @return true si es un PerfectBinaryTree, false en otro caso.
+     */
     public boolean isPerfectBinaryTree(NodoArbol raiz) {
     	if(numberOfLeafs(raiz) == Math.pow(2, level(raiz)))
     		return true;
     	return false;
     }
-    
+
+    /**
+     * Método que revisa si es un árbol binario completo.
+     * @param raiz Raíz del árbol binario.
+     * @return true si es un FullBinaryTree, false en otro caso.
+     */
     public boolean isFullBinaryTree(NodoArbol raiz) {
     	if(raiz == null)
     		return false;
-    	
+
     	if(!hasTwoChildren(raiz) && !isLeaf(raiz))
     		return false;
-    	
+
     	if(isLeaf(raiz))
     		return true;
-    	
-    	return isFullBinaryTree(raiz.nodoDer) && isFullBinaryTree(raiz.nodoIzq);
+
+    	return isFullBinaryTree(raiz.getNodoDer()) && isFullBinaryTree(raiz.getNodoIzq());
     }
-    
+
+    /**
+     * Método que revisa si es un árbol binario denegerado.
+     * @param raiz Raíz del árbol binario.
+     * @return true si es un DegenerateBinaryTree, false en otro caso.
+     */
     public boolean isDegenerateBinaryTree(NodoArbol raiz) {
        	if(raiz == null) {
     		return false;
-    	}    	
+    	}
     	if(hasTwoChildren(raiz))
     		return false;
-    	
-    	if(raiz.nodoIzq != null) 
-    		isDegenerateBinaryTree(raiz.nodoIzq);
-    	else 
-    		isDegenerateBinaryTree(raiz.nodoDer);
-    	
+
+    	if(raiz.getNodoIzq() != null)
+	    isDegenerateBinaryTree(raiz.getNodoIzq());
+    	else
+	    isDegenerateBinaryTree(raiz.getNodoDer());
     	return true;
     }
-    
-    public boolean isLeaf(NodoArbol raiz) {
-    	if(raiz == null) {
+
+    /**
+     * Método que comprueba si el nodo es una hoja.
+     * @param n Nodo del cual queremos saber si es una hoja
+     * @return true si es una hoja, false en otro caso.
+     */
+    public boolean isLeaf(NodoArbol n) {
+    	if(n == null) {
     		return false;
     	}
     	boolean b = false;
-    	if(raiz.nodoIzq == null && raiz.nodoDer == null)
+    	if(n.getNodoIzq() == null && n.getNodoDer() == null)
     		b = true;
     	return b;
     }
-    
-    public boolean hasTwoChildren(NodoArbol raiz) {
-    	if(raiz == null)
-    		return false;    	
+
+    /**
+     * Método para saber si un nodo tiene dos hijos
+     * @param n Nodo del cual queremos saber si tiene dos hijos
+     * @return true si tiene dos hijos, false en otro caso.
+     */
+    public boolean hasTwoChildren(NodoArbol n) {
+    	if(n == null)
+    		return false;
     	boolean b = false;
-    	if(raiz.nodoIzq != null && raiz.nodoDer != null)
+    	if(n.getNodoIzq() != null && n.getNodoDer() != null)
     		b = true;
     	return b;
     }
-    
+
+    /**
+     * Método que devuleve la altura del árbol binario.
+     * @param raiz Raíz del árbol binario.
+     * @return La altura del árbol.
+     */
     public int altura(NodoArbol raiz) {
     	if(raiz == null)
     		return 0;
-    	return 1 + Math.max(altura(raiz.nodoIzq), altura(raiz.nodoDer));
+    	return 1 + Math.max(altura(raiz.getNodoIzq()), altura(raiz.getNodoDer()));
     }
-    
+
+    /**
+     * Método que devuelve el número de hojas que tiene un árbol binario.
+     * @param raiz Raiz del árbol binario.
+     * @return El número de hojas en el árbol binario.
+     */
     public int numberOfLeafs(NodoArbol raiz) {
     	if(raiz == null) {
     		return 0;
@@ -275,14 +372,19 @@ public class Arbol {
     	if(isLeaf(raiz)) {
     		return 1;
     	}
-    	
-    	return numberOfLeafs(raiz.nodoIzq) + numberOfLeafs(raiz.nodoDer);
+
+    	return numberOfLeafs(raiz.getNodoIzq()) + numberOfLeafs(raiz.getNodoDer());
     }
-    
+
+    /**
+     *	Método para obtener el número de niveles que tiene un nodo. Empezando de 0.
+     * @param raiz Raíz del árbol binario.
+     * @return El número de niveles que tiene el árbol binario.
+     */
     public int level(NodoArbol raiz) {
     	return altura(raiz)-1;
     }
-    
+
     public NodoArbol getRaiz() {
     	return raiz;
     }
