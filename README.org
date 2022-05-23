@@ -21,7 +21,6 @@ El propósito de este repositorio es realizar la implementación de un árbol bi
 
 ** Screenshots
 #+ATTR_HTML: :width 75%
-#+ATTR_HTML: :margin auto
 [[./screenshots/nivel5.png]]
 
 ** Licencia :page_facing_up:.
