@@ -19,7 +19,7 @@ El propósito de este repositorio es realizar la implementación de un árbol bi
 
 ** Screenshots
 #+CAPTION: Método toString con un árbol de altura 2.
-[[./screenshots/nivel2.png
+[[/screenshots/nivel2.png
 ]]
 ** Licencia :page_facing_up:.
 Este proyecto está bajo la Licencia MIT License - mire el archivo [[LICENSE][LICENSE]] para  más detalles.
