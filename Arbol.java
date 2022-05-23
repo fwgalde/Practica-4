@@ -260,6 +260,24 @@ public class Arbol {
     }
 
     /**
+     * Método que imprime que tipo de árbol binario es.
+     */
+    public void imprimeTipo() {
+	if (isFullBinaryTree(raiz)) {
+	    System.out.println("El árbol es un Full binary tree.");
+	}
+	if (isPerfectBinaryTree(raiz)) {
+	    System.out.println("El árbol es un Perfect binary tree.");
+	}
+	if (isBalancedBinaryTree(raiz)) {
+	    System.out.println("El árbol es un Balanced binary tree");
+	}
+	if (isDegenerateBinaryTree(raiz)) {
+	    System.out.println("El árbol es un Degenerate binary tree");
+	}
+    }
+
+    /**
      * Método que revisa si es un árbol binario balanceado.
      * @param raiz Raíz del árbol binario.
      * @return true si es un BalancedBinaryTree, false en otro caso.
@@ -306,7 +324,7 @@ public class Arbol {
      * @param raiz Raíz del árbol binario.
      * @return true si es un DegenerateBinaryTree, false en otro caso.
      */
-    public boolean isDegenerateBinaryTree(NodoArbol raiz) {
+    protected boolean isDegenerateBinaryTree(NodoArbol raiz) {
        	if(raiz == null) {
     		return false;
     	}
@@ -325,7 +343,7 @@ public class Arbol {
      * @param n Nodo del cual queremos saber si es una hoja
      * @return true si es una hoja, false en otro caso.
      */
-    public boolean isLeaf(NodoArbol n) {
+    protected boolean isLeaf(NodoArbol n) {
     	if(n == null) {
     		return false;
     	}
@@ -340,7 +358,7 @@ public class Arbol {
      * @param n Nodo del cual queremos saber si tiene dos hijos
      * @return true si tiene dos hijos, false en otro caso.
      */
-    public boolean hasTwoChildren(NodoArbol n) {
+    protected boolean hasTwoChildren(NodoArbol n) {
     	if(n == null)
     		return false;
     	boolean b = false;
@@ -365,7 +383,7 @@ public class Arbol {
      * @param raiz Raiz del árbol binario.
      * @return El número de hojas en el árbol binario.
      */
-    public int numberOfLeafs(NodoArbol raiz) {
+    protected int numberOfLeafs(NodoArbol raiz) {
     	if(raiz == null) {
     		return 0;
     	}

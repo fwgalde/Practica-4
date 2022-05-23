@@ -1,0 +1,83 @@
+#+TITLE: Práctica 4 - Árboles
+#+AUTHOR: Fernando Ugalde U.
+#+DATE: May 2022
+
+* TODO Crear los métodos pedidos.
+- [X] ~toString()~
+- [X] ~busquedaSeguimiento(Nodo n)~
+- [X] ~getNumerDescendientes(Nodo n)~
+- [X] ~imprimeTipo(T)~
+
+* Implementación ~toString()~.
+Para la implementación de este método, necesitamos de varios métodos auxiliares.
+** Métodos auxiliares.
+*** ~espaciosBlancos(int n)~.
+Regresa una cadena de ~n~  espacios blancos.
+
+*** ~arbolLista(NodoArbol raiz)~.
+Regresa la representación de un árbol de manera plana (como si fuera una lista), cuando tiene un altura mayor a 5.
+
+*** ~dibujaArbol(List<NodoArbol> nodos, int nivel, int altura)~.
+Regresa la representación de un árbol dibujándolo. A su vez, este emplea ~espacioBlancos()~.
+
+* Implementación ~getNumeroDescendientes()~.
+Para la implementación de este método necesitamos tres métodos auxiliares ~contiene~, ~busca~ y ~cuentaHijos~.
+** Métodos auxiliares.
+Solo pondremos el último método auxiliar, pues los primeros dos se encuentran en los métodos genéricos.
+***  ~cuentaHijos(NodoArbol n)~
+Creamos un método auxiliar llamado  ~cuentaHijos()~ que de manera recursiva revisa cuántos descendientes tiene ~n~. Después mandamos a llamar a este dentro del método principal.
+
+* Implementación ~busquedaSeguimiento()~.
+Para la implementación de este método necesitamos dos métodos auxiliares ~ruta~ y ~contiene~.
+** Métodos auxiliares.
+Solo pondremos el primer método auxiliar pues el segundo método se encuentra en los métodos genéricos.
+***  ~ruta(NodoArbol raiz, int dato)~.
+Creamos un método auxiliar llamado ~ruta()~ que de manera recursiva recorre el árbol hasta llegar al nodo que buscamos (~dato~). Posteriormente, mandamos a llamar a este dentro del método principal.
+
+* Implementación ~imprimeTipo()~.
+Para la implementación de este método, necesitamos de varios métodos para ayudarnos.
+** Métodos auxiliares.
+Métodos que son utilizados dentro del método principal.
+**** ~isFullBinaryTree()~
+Este método se encarga de resivar si el árbol es completo o no. Por definición, un árbol es completo si el nodo tiene 0 o 2 descendientes.
+
+Así, este método verifica que cada nodo tenga 0 o 2 descendientes.
+
+**** ~isPerfectBinaryTree()~
+Este método se encarga de resivar si el árbol es perfecto o no. Por definición, un árbol es perfecto si en cada nivel todos los nodos tienen 0 o 2 hijos; es decir, todos los nodos tienen dos hijos excepto las hojas.
+
+Así, calculamos si es perfecto a través de que los hijos tienen que ser $2^{altura-1}$.
+
+**** ~isBalancedBinaryTree()~
+Este método se encarga de revisar si el árbol es balnceado o no. Por definición, un árbol es balanceado si la altura del subárbol derecho menos el izquierdo difiere en a lo más 1.
+
+Así, calculamos si es balanceado a través de sacarle el valor absoluto a la diferencia de los subárboles.
+
+**** ~isDegenerateBinaryTree()~
+Este método se encarga de revisar si el árbol es degenerado o no. Por definición, un árbol es degenerado si todo nodo tiene únicamente 1 descediente.
+
+Así, este método verifica que cada nodo tenga 0 o 1 descendiente.
+
+* Métodos genéricos.
+Métodos que son necesarios para los métodos principales, pero como tal no son auxilares a ninguno de estos.
+** ~contiene(int dato)~.
+Método que devuelve si un valor está contenido en el árbol binario.
+*** Método auxiliar ~contiene(NodoArbol raiz, int dato)~.
+Método auxiliar que recorre recursivamente el árbol en búsqueda del valor.
+
+** ~busca(int dato)~.
+Método que devuelve el nodo del valor buscado.
+*** Método auxiliar ~busca(NodoArbol raiz, int dato)~.
+Método auxiliar que recorre recusrivamente el árbol en búsqueda del valor.
+
+** ~altura()~.
+Método que devuelve la altura del árbol binario. Se calcula recursivamente.
+
+** ~hasTwoChildren(NodoArbol n)~.
+Método que devuelve si un nodo tiene dos descendientes.
+
+** ~isLeaf(NodoArbol n)~.
+Método que devuelve si un nodo es una hoja; es decir, el nodo si el no tiene descendientes.
+
+** ~numberOfLeafs()~.
+Este método regresa el número de hojas que tiene el árbol.
