@@ -105,34 +105,135 @@ public class Arbol {
         System.out.print(nodo.getDato() + " ");
     }
 
+    /**
+     * Método que devuelve n espacios blancos.
+     * @param n Número de espacios blancos.
+     * @return Una cadena de n espacios blancos.
+     */
+    private String espaciosBlancos(int n) {
+	String s = "";
+    	for(int i = 0; i < n; i++)
+    		s += " ";
+    	return s;
+    }
 
-    public void nivel(NodoArbol raiz) {
+    @Override
+    public String toString() {
+    	if(altura(raiz) < 6) {
+	    LinkedList<NodoArbol> nodos = new LinkedList<>();
+	    nodos.add(raiz);
+	    return imprimeSubArbol(nodos, 1, altura(raiz));
+    	}
+    	return arbolLista(raiz);
+    }
+
+    /**
+     * Método que devuelve un árbol binario como si fuera una lista.
+     * @param raiz Raíz del árbol
+     * @return Cadena de nodos.
+     */
+    public String arbolLista(NodoArbol raiz) {
+    	String s = "";
     	if(raiz == null)
-    		return;
+    		return s;
+
     	Queue<NodoArbol> cola = new LinkedList<>();
     	cola.add(raiz);
     	cola.add(null);
 
     	while(!cola.isEmpty()) {
 	    NodoArbol actual = cola.remove();
-
 	    if(actual == null) {
-		System.out.println();
-		if(cola.isEmpty()) {
+		s += "-> ";
+		if(cola.isEmpty())
 		    break;
-		} else {
+		else
 		    cola.add(null);
-		}
 	    } else {
-		System.out.print(actual.getDato() + " ");
-		if(actual.getNodoIzq() != null) {
+		s += "[" + actual.getDato() + "] ";
+		if(actual.getNodoIzq() != null)
 		    cola.add(actual.getNodoIzq());
-		}
-		if(actual.getNodoDer() != null) {
+
+		if(actual.getNodoDer() != null)
 		    cola.add(actual.getNodoDer());
-		}
 	    }
     	}
+    	return s.substring(0, s.length()-4);
+    }
+
+    /**
+     * Método que imprime la representación de un árbol binario.
+     * @param nodos Lista de los nodos que queremos imprimir.
+     * @param nivel Nivel en el que nos encontramos (empezando de 1).
+     * @param altura Altura del árbol.
+     * @return Cadena que representa el árbol.
+     */
+    private String imprimeSubArbol(LinkedList<NodoArbol> nodos, int nivel, int altura) {
+    	String s = "";
+    	if (nodos.isEmpty() || esListaNula(nodos)) {
+        	nodos.clear();
+        	return s;
+        }
+        int nivelActual = altura - nivel;
+        int flechas = (int) Math.pow(2, (Math.max(nivelActual - 1, 0)));
+        int espaciosIniciales = (int) Math.pow(2, (nivelActual)) - 1;
+        int espaciosEntreNodos = (int) Math.pow(2, (nivelActual + 1)) - 1;
+
+        s += espaciosBlancos(espaciosIniciales);
+
+        LinkedList<NodoArbol> nuevosNodos = new LinkedList<NodoArbol>();
+        for (NodoArbol n : nodos) {
+            if (n != null) {
+                s += n.getDato();
+                nuevosNodos.add(n.getNodoIzq());
+                nuevosNodos.add(n.getNodoDer());
+            } else {
+                nuevosNodos.add(null);
+                nuevosNodos.add(null);
+                s += " ";
+            }
+            s += espaciosBlancos(espaciosEntreNodos);
+        }
+        s += "\n";
+
+        for (int i = 1; i <= flechas; i++) {
+            for (int j = 0; j < nodos.size(); j++) {
+                s += espaciosBlancos(espaciosIniciales - i);
+                if (nodos.get(j) == null) {
+                	s += espaciosBlancos(flechas + flechas + i + 1);
+                    continue;
+                }
+
+                if (nodos.get(j).getNodoIzq() != null)
+                    s += "/";
+                else
+                	s += espaciosBlancos(1);
+
+                s+=espaciosBlancos(i + i - 1);
+
+                if (nodos.get(j).getNodoDer() != null)
+                    s+="\\";
+                else
+                	s+=espaciosBlancos(1);
+
+                s+=espaciosBlancos(flechas + flechas - i);
+            }
+            s +="\n";
+        }
+        return s += imprimeSubArbol(nuevosNodos, nivel + 1, altura);
+    }
+
+    /**
+     * Revisa si todos los elementos de la lista son null o no.
+     * @param lista Lista de la cual queremos revisar sus elementos.
+     * @return true si todos sus elementos son null, false en otro caso.
+     */
+    private boolean esListaNula(LinkedList<NodoArbol> lista) {
+	for(NodoArbol dato : lista) {
+	    if(dato != null)
+		return false;
+	}
+	return true;
     }
 
     /**
@@ -219,12 +320,14 @@ public class Arbol {
      * @param dato Valor del nodo que buscamos.
      */
     public void ruta(NodoArbol raiz, int dato) {
-	if(dato < raiz.getDato()) {
-    		System.out.print("L");
-    		ruta(raiz.getNodoIzq(),dato);
+	if(raiz.getDato() == dato)
+	    System.out.println();
+	else if(dato < raiz.getDato()) {
+	    System.out.print("L");
+	    ruta(raiz.getNodoIzq(),dato);
     	} else {
-    		System.out.print("D");
-    		ruta(raiz.getNodoDer(), dato);
+	    System.out.print("D");
+	    ruta(raiz.getNodoDer(), dato);
     	}
     }
 
@@ -296,7 +399,7 @@ public class Arbol {
      * @return true si es un PerfectBinaryTree, false en otro caso.
      */
     public boolean isPerfectBinaryTree(NodoArbol raiz) {
-    	if(numberOfLeafs(raiz) == Math.pow(2, level(raiz)))
+    	if(numberOfLeafs(raiz) == Math.pow(2, altura(raiz)-1))
     		return true;
     	return false;
     }
@@ -393,18 +496,4 @@ public class Arbol {
 
     	return numberOfLeafs(raiz.getNodoIzq()) + numberOfLeafs(raiz.getNodoDer());
     }
-
-    /**
-     *	Método para obtener el número de niveles que tiene un nodo. Empezando de 0.
-     * @param raiz Raíz del árbol binario.
-     * @return El número de niveles que tiene el árbol binario.
-     */
-    public int level(NodoArbol raiz) {
-    	return altura(raiz)-1;
-    }
-
-    public NodoArbol getRaiz() {
-    	return raiz;
-    }
-
 }
