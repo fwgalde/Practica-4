@@ -57,17 +57,32 @@ public class UsoArbol {
 	test6.insertarNodo(22);
 	test6.insertarNodo(9);
 
+	System.out.println("\n\n\t Test 0");
+	System.out.println(test0.toString());
+	test0.imprimeTipo();
+
+	System.out.println("\n\n\t Test 1");
 	System.out.println(test1.toString());
 	test1.imprimeTipo();
+
+	System.out.println("\n\n\t Test 2");
 	System.out.println(test2.toString());
 	test2.imprimeTipo();
+
+	System.out.println("\n\n\t Test 3");
 	System.out.println(test3.toString());
 	test3.imprimeTipo();
+
+	System.out.println("\n\n\t Test 4");
 	System.out.println(test4.toString());
 	test4.imprimeTipo();
+
+	System.out.println("\n\n\t Test 5");
 	System.out.println(test5.toString());
 	test5.imprimeTipo();
 	test5.busquedaSeguimiento(29);
+
+	System.out.println("\n\n\t Test 6");
 	System.out.println(test6.toString());
 	System.out.println(test6.getNumeroDescendientes(23));
 	test6.busquedaSeguimiento(9);

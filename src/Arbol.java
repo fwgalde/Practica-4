@@ -366,18 +366,20 @@ public class Arbol {
      * Método que imprime que tipo de árbol binario es.
      */
     public void imprimeTipo() {
-	if (isFullBinaryTree(raiz)) {
+	if (raiz == null)
+	    return;
+
+	if (isFullBinaryTree(raiz))
 	    System.out.println("El árbol es un Full binary tree.");
-	}
-	if (isPerfectBinaryTree(raiz)) {
+
+	if (isPerfectBinaryTree(raiz))
 	    System.out.println("El árbol es un Perfect binary tree.");
-	}
-	if (isBalancedBinaryTree(raiz)) {
+
+	if (isBalancedBinaryTree(raiz))
 	    System.out.println("El árbol es un Balanced binary tree");
-	}
-	if (isDegenerateBinaryTree(raiz)) {
+
+	if (isDegenerateBinaryTree(raiz))
 	    System.out.println("El árbol es un Degenerate binary tree");
-	}
     }
 
     /**
