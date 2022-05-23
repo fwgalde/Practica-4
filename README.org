@@ -19,6 +19,8 @@ El propósito de este repositorio es realizar la implementación de un árbol bi
 
 ** Screenshots
 #+CAPTION: Método toString con un árbol de altura 2.
+#+ATTR_HTML: :width 50%
+#+ATTR_HTML: :margin auto
 [[/screenshots/nivel2.png
 ]]
 ** Licencia :page_facing_up:.
