@@ -1,6 +1,8 @@
 #+TITLE: Práctica 4 - Árboles
 #+AUTHOR: Fernando Ugalde U.
 #+DATE: May 2022
+#+HTML_HEAD_EXTRA: <style> .figure p {text-align: center;}</style>
+
 
 ** Description
 El propósito de este repositorio es realizar la implementación de un árbol binario y algunos métodos de este.
@@ -18,9 +20,9 @@ El propósito de este repositorio es realizar la implementación de un árbol bi
   - [[https://openjdk.java.net][OpenJDK 11.0.15]]
 
 ** Screenshots
-#+ATTR_HTML: :width 50%
+#+ATTR_HTML: :width 75%
 #+ATTR_HTML: :margin auto
-[[./screenshots/nivel2.png]]
+[[./screenshots/nivel5.png]]
 
 ** Licencia :page_facing_up:.
 Este proyecto está bajo la Licencia MIT License - mire el archivo [[LICENSE][LICENSE]] para  más detalles.
