@@ -6,7 +6,7 @@
 El propósito de este repositorio es realizar la implementación de un árbol binario y algunos métodos de este.
 - :evergreen_tree: Imprimir la representación del árbol - método ~toString()~.
 - :motorway: Encontrar la ruta que se sigue desde la raíz hasta un nodo - método ~busquedaSeguimiento()~.
-- :family: Encontrar el número de descendientes de cierto nodo - método ~busquedaSeguimiento()~.
+- :family: Encontrar el número de descendientes de cierto nodo - método ~getNumeroDescendientes()~.
 - :aquarius: Devuelve que tipo de árbol es - método ~imprimeTipo()~.
 
 ** Entornos en donde fue probado.
